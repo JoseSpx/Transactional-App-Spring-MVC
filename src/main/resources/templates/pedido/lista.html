@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container mt-3">
+
+    <div class="row my-2">
+        <div class="col-12">
+            <h4> Cliente </h4>
+            <p th:text="${cliente.getNombre()} + ' ' +${cliente.getApellido()}"> </p>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <a th:href="@{/cliente/{id}/pedido/registrar(id=${cliente.getId()})}" class="btn btn-primary"> Registrar Nuevo Pedido </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3> Lista de Pedidos </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table id="app" class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"> Id </th>
+                    <th scope="col"> Monto </th>
+                    <th scope="col"> Fecha  </th>
+                    <th scope="col">  </th>
+                    <!--th scope="col">  </th-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pedido : ${cliente.pedidoList}">
+                    <th style="vertical-align: middle" scope="row" th:text="${pedido.getId()}"></th>
+                    <td style="vertical-align: middle" th:text="${pedido.getMonto()}"></td>
+                    <td style="vertical-align: middle" th:text="${#temporals.format(pedido.getFechaPedido(), 'dd-MMM-yyyy')}"></td>
+                    <td>
+                        <a th:href="@{/pedido/{id}(id=${pedido.getId()})}" class="btn btn-info"> Ver Detalle </a>
+                    </td>
+                    <!--td>
+                        <a th:href="@{/pedido/{idpedido}/cliente/{idcliente}/eliminar(idcliente=${cliente.getId()},idpedido=${pedido.getId()})}"
+                           class="btn btn-warning"> Eliminar </a>
+                    </td-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/cliente/lista.js}"></script>
+</body>
+</html>

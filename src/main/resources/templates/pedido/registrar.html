@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div id="app" class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center"> Registrar Pedido </h3>
+            <hr>
+        </div>
+        <div class="col-12">
+            <h6 class="text-center">Cliente : <span th:text="${cliente.getNombre()} + ' ' + ${cliente.getApellido()}"></span> </h6>
+            <input style="display: none" type="text" id="idClient" th:value="${cliente.getId()}" title="id" />
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form  @submit.prevent="sendForm">
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="text-center"> Selecciones los productos </h6>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-12">
+                        <input v-model="cantidad" type="number" class="form-control" placeholder="Cantidad" />
+                        <p :value="errorcantidad" class="text-danger">  </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"> Codigo </th>
+                                <th scope="col"> Nombre </th>
+                                <th scope="col"> S./ Precio  </th>
+                                <th scope="col"> Cantidad </th>
+                                <th scope="col">  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="producto in list">
+                                <td style="vertical-align: middle" v-text="producto.codigo"> </td>
+                                <td style="vertical-align: middle" v-text="producto.nombre">  </td>
+                                <td style="vertical-align: middle" v-text="producto.precio">  </td>
+                                <td style="vertical-align: middle" v-text="producto.cantidad">  </td>
+                                <td>
+                                    <button @click="agregarProducto(producto)" type="button" class="btn btn-dark"> Agregar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="text-center"> Lista de Productos Seleccionados </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"> Codigo </th>
+                                <th scope="col"> Nombre </th>
+                                <th scope="col"> S./ Precio  </th>
+                                <th scope="col"> Cantidad </th>
+                                <th scope="col"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="producto in productsSelectedList">
+                                <td style="vertical-align: middle" v-text="producto.codigo"> </td>
+                                <td style="vertical-align: middle" v-text="producto.nombre">  </td>
+                                <td style="vertical-align: middle" v-text="producto.precio">  </td>
+                                <td style="vertical-align: middle" v-text="producto.cantidad">  </td>
+                                <td>
+                                    <button @click="quitarProducto(producto)" type="button" class="btn btn-danger"> X </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <b> Total :  </b><span> {{ montoTotal }} </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center my-2">
+                        <button @click="sendForm" style="width: 100%" type="submit" class="btn btn-primary"> Registrar </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/pedido/registrar.js}"></script>
+</body>
+</html>

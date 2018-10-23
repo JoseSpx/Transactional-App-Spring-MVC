@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <h3 class="text-center"> Detalles del Cliente </h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="form-group">
+                <label for="nombre"> Nombre </label>
+                <input disabled type="text" class="form-control" id="nombre" name="nombre"
+                       th:value="${cliente.getNombre()}" maxlength="250">
+            </div>
+            <div class="form-group">
+                <label for="apellido"> Apellido </label>
+                <input disabled type="text" class="form-control" id="apellido" name="apellido"
+                       th:value="${cliente.getApellido()}" max="250">
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    Lista de Correos
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 mt-2">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"> Correo </th>
+                            <th scope="col"> Tipo </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="clienteCorreo : ${cliente.clienteCorreoList}">
+                                <td style="vertical-align: middle" th:text="${clienteCorreo.getTipoCorreo().getNombre()}" >  </td>
+                                <td style="vertical-align: middle" th:text="${clienteCorreo.getCorreo()}" ></td>
+                            </tr>
+                            <tr th:if="${cliente.clienteCorreoList.isEmpty()}">
+                                <td colspan="3"> No hay correos </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/cliente/registrar.js}"></script>
+</body>
+</html>

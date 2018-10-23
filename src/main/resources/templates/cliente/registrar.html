@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <h3 class="text-center"> Registrar Cliente </h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <form id="app" @submit.prevent="sendForm">
+                <div class="form-group">
+                    <label for="nombre"> Nombre </label>
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                           placeholder="Ingrese el nombre" maxlength="250"
+                           v-model="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="apellido"> Apellido </label>
+                    <input type="text" class="form-control" id="apellido" name="apellido"
+                           placeholder="Ingrese el apellido" max="250"
+                           v-model="apellido">
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Lista de Correos
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-3">
+                        <select v-model="tipoCorreo" class="form-control" name="tipoCorreo" id="" title="tipos de correo">
+                            <option th:each="tipocorreo : ${tipoCorreoList}"
+                                    th:value="${tipocorreo.id}"
+                                    th:text="${tipocorreo.nombre}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" type="text" placeholder="Ingrese Correo" name="correo"
+                               v-model="correo">
+                    </div>
+                    <div class="col-2">
+                        <button type="button" @click="agregarCorreo" class="btn btn-dark"> Agregar </button>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"> Correo </th>
+                                <th scope="col"> Tipo </th>
+                                <th scope="col"> Accion </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-if="listaCorreos.length > 0" v-for="correo in listaCorreos">
+                                <td style="vertical-align: middle" > {{ correo.desCorreo }} </td>
+                                <td style="vertical-align: middle" >
+                                    <span v-if="correo.tipo == 1"> Personal </span>
+                                    <span v-else > Oficina </span>
+                                </td>
+                                <td>
+                                    <button type="button" @click="eliminarCorreo(correo.desCorreo)"  class="btn btn-danger"> Eliminar </button>
+                                </td>
+                            </tr>
+                            <tr v-if="listaCorreos.length === 0">
+                                <td colspan="3"> No hay correos </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center my-2">
+                    <button @click="" style="width: 100%" type="submit" class="btn btn-primary"> Registrar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/cliente/registrar.js}"></script>
+</body>
+</html>

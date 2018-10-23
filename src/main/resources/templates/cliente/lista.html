@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container mt-3">
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <a th:href="@{/cliente/registrar}" class="btn btn-primary"> Registrar Nuevo Cliente </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3> Lista de Clientes </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table id="app" class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"> Codigo </th>
+                    <th scope="col"> Nombre </th>
+                    <th scope="col"> Apellidos </th>
+                    <th scope="col">  </th>
+                    <th scope="col">  </th>
+                    <th scope="col">  </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clienteList}">
+                        <th style="vertical-align: middle" scope="row" th:text="${cliente.getId()}"></th>
+                        <td style="vertical-align: middle" th:text="${cliente.getNombre()}"></td>
+                        <td style="vertical-align: middle" th:text="${cliente.getApellido()}"></td>
+                        <td>
+                            <a th:href="@{/cliente/{id}/pedido(id=${cliente.getId()})}" class="btn btn-secondary"> Pedidos </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/cliente/ver/{id}(id=${cliente.getId()})}" class="btn btn-info"> Ver Detalle </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/cliente/eliminar/{id}(id=${cliente.getId()})}" class="btn btn-warning"> Eliminar </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/cliente/lista.js}"></script>
+</body>
+</html>

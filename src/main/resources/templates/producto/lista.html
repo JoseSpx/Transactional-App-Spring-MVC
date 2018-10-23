@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container mt-3">
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <a th:href="@{/producto/registrar}" class="btn btn-primary"> Registrar Nuevo Producto </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3> Lista de Productos </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table id="app" class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"> Codigo </th>
+                    <th scope="col"> Nombre </th>
+                    <th scope="col"> Descripcion </th>
+                    <th scope="col"> Precio </th>
+                    <th scope="col">  </th>
+                    <th scope="col">  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="producto : ${productoList}">
+                    <th style="vertical-align: middle" scope="row" th:text="${producto.getId()}"></th>
+                    <td style="vertical-align: middle" th:text="${producto.getNombre()}"></td>
+                    <td style="vertical-align: middle" th:text="${producto.getDescripcion()}"></td>
+                    <td style="vertical-align: middle" th:text="${producto.getPrecio()} + ' soles'"></td>
+                    <td>
+                        <a th:href="@{/producto/ver/{id}(id=${producto.getId()})}" class="btn btn-info"> Ver Detalle </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/producto/eliminar/{id}(id=${producto.getId()})}" class="btn btn-warning"> Eliminar </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script th:replace="layout/layout :: scripts"></script>
+<script th:src="@{/js/cliente/lista.js}"></script>
+</body>
+</html>
